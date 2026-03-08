@@ -1,0 +1,248 @@
+{
+    "info": {
+      "name": "questoes-api",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Auth",
+        "item": [
+          {
+            "name": "Login",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "exec": [
+                    "const res = pm.response.json();",
+                    "if (res.access_token) {",
+                    "  pm.collectionVariables.set('token', res.access_token);",
+                    "}"
+                  ],
+                  "type": "text/javascript"
+                }
+              }
+            ],
+            "request": {
+              "method": "POST",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"email\": \"admin@admin.dev\",\n  \"password\": \"teste\"\n}"
+              },
+              "url": {
+                "raw": "{{baseUrl}}/auth/login",
+                "host": ["{{baseUrl}}"],
+                "path": ["auth", "login"]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Users",
+        "item": [
+          {
+            "name": "Cadastrar usuário",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "exec": [
+                    "const res = pm.response.json();",
+                    "if (res.id) {",
+                    "  pm.collectionVariables.set('userId', res.id);",
+                    "}"
+                  ],
+                  "type": "text/javascript"
+                }
+              }
+            ],
+            "request": {
+              "method": "POST",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"name\": \"Admin\",\n  \"email\": \"admin@admin.dev\",\n  \"password\": \"teste\"\n}"
+              },
+              "url": {
+                "raw": "{{baseUrl}}/users",
+                "host": ["{{baseUrl}}"],
+                "path": ["users"]
+              }
+            }
+          },
+          {
+            "name": "Listar todos os usuários",
+            "request": {
+              "method": "GET",
+              "url": {
+                "raw": "{{baseUrl}}/users",
+                "host": ["{{baseUrl}}"],
+                "path": ["users"]
+              }
+            }
+          },
+          {
+            "name": "Buscar usuário por ID",
+            "request": {
+              "method": "GET",
+              "url": {
+                "raw": "{{baseUrl}}/users/{{userId}}",
+                "host": ["{{baseUrl}}"],
+                "path": ["users", "{{userId}}"]
+              }
+            }
+          },
+          {
+            "name": "Atualizar usuário",
+            "request": {
+              "method": "PATCH",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" },
+                { "key": "Authorization", "value": "Bearer {{token}}" }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"name\": \"Admin Atualizado\"\n}"
+              },
+              "url": {
+                "raw": "{{baseUrl}}/users/{{userId}}",
+                "host": ["{{baseUrl}}"],
+                "path": ["users", "{{userId}}"]
+              }
+            }
+          },
+          {
+            "name": "Deletar usuário",
+            "request": {
+              "method": "DELETE",
+              "header": [
+                { "key": "Authorization", "value": "Bearer {{token}}" }
+              ],
+              "url": {
+                "raw": "{{baseUrl}}/users/{{userId}}",
+                "host": ["{{baseUrl}}"],
+                "path": ["users", "{{userId}}"]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Questions",
+        "item": [
+          {
+            "name": "Cadastrar questão",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "exec": [
+                    "const res = pm.response.json();",
+                    "if (res.id) {",
+                    "  pm.collectionVariables.set('questionId', res.id);",
+                    "}"
+                  ],
+                  "type": "text/javascript"
+                }
+              }
+            ],
+            "request": {
+              "method": "POST",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" },
+                { "key": "Authorization", "value": "Bearer {{token}}" }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"description\": \"Qual é a capital do Brasil?\",\n  \"subject\": \"Geografia\",\n  \"alternatives\": [\n    { \"description\": \"São Paulo\", \"is_correct\": false },\n    { \"description\": \"Brasília\", \"is_correct\": true },\n    { \"description\": \"Rio de Janeiro\", \"is_correct\": false },\n    { \"description\": \"Salvador\", \"is_correct\": false },\n    { \"description\": \"Manaus\", \"is_correct\": false }\n  ]\n}"
+              },
+              "url": {
+                "raw": "{{baseUrl}}/questions",
+                "host": ["{{baseUrl}}"],
+                "path": ["questions"]
+              }
+            }
+          },
+          {
+            "name": "Listar todas as questões",
+            "request": {
+              "method": "GET",
+              "url": {
+                "raw": "{{baseUrl}}/questions",
+                "host": ["{{baseUrl}}"],
+                "path": ["questions"]
+              }
+            }
+          },
+          {
+            "name": "Buscar questão por ID",
+            "request": {
+              "method": "GET",
+              "url": {
+                "raw": "{{baseUrl}}/questions/{{questionId}}",
+                "host": ["{{baseUrl}}"],
+                "path": ["questions", "{{questionId}}"]
+              }
+            }
+          },
+          {
+            "name": "Atualizar questão",
+            "request": {
+              "method": "PUT",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" },
+                { "key": "Authorization", "value": "Bearer {{token}}" }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"description\": \"Qual é a capital do Brasil? (atualizada)\",\n  \"subject\": \"Geografia\",\n  \"alternatives\": [\n    { \"description\": \"São Paulo\", \"is_correct\": false },\n    { \"description\": \"Brasília\", \"is_correct\": true },\n    { \"description\": \"Rio de Janeiro\", \"is_correct\": false },\n    { \"description\": \"Fortaleza\", \"is_correct\": false },\n    { \"description\": \"Manaus\", \"is_correct\": false }\n  ]\n}"
+              },
+              "url": {
+                "raw": "{{baseUrl}}/questions/{{questionId}}",
+                "host": ["{{baseUrl}}"],
+                "path": ["questions", "{{questionId}}"]
+              }
+            }
+          },
+          {
+            "name": "Deletar questão",
+            "request": {
+              "method": "DELETE",
+              "header": [
+                { "key": "Authorization", "value": "Bearer {{token}}" }
+              ],
+              "url": {
+                "raw": "{{baseUrl}}/questions/{{questionId}}",
+                "host": ["{{baseUrl}}"],
+                "path": ["questions", "{{questionId}}"]
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "variable": [
+      {
+        "key": "baseUrl",
+        "value": "http://localhost:3000"
+      },
+      {
+        "key": "token",
+        "value": ""
+      },
+      {
+        "key": "userId",
+        "value": ""
+      },
+      {
+        "key": "questionId",
+        "value": ""
+      }
+    ]
+  }
