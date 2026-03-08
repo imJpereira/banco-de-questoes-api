@@ -130,6 +130,31 @@ A API estará disponível em `http://localhost:3000`.
 
 ---
 
+## Documentação
+
+### Swagger
+
+A documentação interativa da API está disponível em:
+
+```
+http://localhost:3000/docs
+```
+
+Para testar rotas protegidas no Swagger, clique em **Authorize** e informe o token JWT obtido no endpoint `/auth/login`.
+
+### Postman
+
+Importe o arquivo `questoes-api.postman_collection.json` disponível na raiz do projeto para testar todos os endpoints.
+
+Para importar:
+1. Abra o Postman
+2. Clique em **Import**
+3. Selecione o arquivo `questoes-api.postman_collection.json`
+
+O token JWT é salvo automaticamente na variável `{{token}}` após o login, e os IDs de usuário e questão são salvos automaticamente após o cadastro.
+
+---
+
 ## Tecnologias
 
 - [NestJS](https://nestjs.com/)
